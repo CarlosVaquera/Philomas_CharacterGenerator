@@ -1,0 +1,37 @@
+name: Lola
+role: Bassist / Occult Mechanic
+theme: Arcade Rock Horror
+personality:
+  - clever backstage problem solver
+  - calm under supernatural pressure
+  - dry sense of humor
+  - protective of the band
+physical_appearance:
+  build: compact and sturdy
+  hair: short teal undercut
+  face: focused eyes, mischievous half-smile
+  silhouette: readable bass guitar stance with tool-belt profile
+clothing:
+  jacket: black mechanic jacket with red patches
+  shirt: faded concert tank
+  pants: reinforced charcoal work pants
+  shoes: steel-toe stage boots
+equipment:
+  bass: heavy electric bass with glowing fret markers
+  tools: spectral wrench and cable spool
+supernatural_theme:
+  - haunted amplifier hum
+  - teal ghost sparks
+  - possessed machinery aura
+palette:
+  primary:
+    - "#101820"
+    - "#15E6CD"
+    - "#F2E8CF"
+  accents:
+    - "#D72638"
+    - "#F7C531"
+    - "#7A1CAC"
+frame_size: [112, 192]
+sheet_layout: [12, 12]
+hitbox: [30, 24, 52, 168]

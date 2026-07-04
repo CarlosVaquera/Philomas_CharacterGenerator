@@ -7,7 +7,7 @@ from PIL import Image
 
 from .config import load_animations, load_character
 from .models import ValidationReport
-from .paths import placeholder_spritesheet_path
+from .paths import clean_spritesheet_path
 
 REQUIRED_CHARACTER_FIELDS = {
     "name",
@@ -71,7 +71,7 @@ def validate_character(
         errors.append(str(exc))
         animations = {}
 
-    path = image_path or placeholder_spritesheet_path(character_id, root)
+    path = image_path or clean_spritesheet_path(character_id, root)
     if not path.exists():
         errors.append(f"PNG does not exist: {path}")
         return ValidationReport(character_id, errors, warnings)
@@ -93,7 +93,7 @@ def validate_character(
                 errors.append("PNG must contain transparent and non-transparent pixels")
 
             expected_frames = int(columns) * int(rows)
-            animation_frames = sum(int(count) for count in animations.values())
+            animation_frames = sum(int(spec["frames"]) for spec in animations.values())
             if expected_frames != 144:
                 warnings.append(f"Sheet contains {expected_frames} frames; Pepe placeholder target is 144")
             if animation_frames > expected_frames:
@@ -104,4 +104,3 @@ def validate_character(
         errors.append(f"Could not inspect PNG '{path}': {exc}")
 
     return ValidationReport(character_id, errors, warnings)
-

@@ -7,13 +7,16 @@ from . import __version__
 from .config import load_animations, load_character
 from .frame_exporter import build_animation_frame_manifest
 from .paths import (
+    animation_manifest_path,
     character_path,
+    clean_spritesheet_path,
     export_asset_dir,
     exported_frames_dir,
     find_project_root,
     generated_prompt_dir,
     placeholder_spritesheet_path,
     project_style_path,
+    qa_report_path,
 )
 
 
@@ -41,6 +44,8 @@ def export_metadata(character_id: str, root: Path | None = None) -> Path:
         animation_name: {
             "start_frame": animation_data["start_frame"],
             "frame_count": animation_data["frame_count"],
+            "loop": animation_data["loop"],
+            "frame_duration_ms": animation_data["frame_duration_ms"],
             "paths": [
                 project_relative(path, project_root)
                 for path in animation_data["paths"]
@@ -65,6 +70,18 @@ def export_metadata(character_id: str, root: Path | None = None) -> Path:
             "project_style": project_relative(project_style_path(project_root), project_root),
             "raw_spritesheet": project_relative(
                 placeholder_spritesheet_path(character_id, project_root),
+                project_root,
+            ),
+            "clean_spritesheet": project_relative(
+                clean_spritesheet_path(character_id, project_root),
+                project_root,
+            ),
+            "animation_manifest": project_relative(
+                animation_manifest_path(character_id, project_root),
+                project_root,
+            ),
+            "qa_report": project_relative(
+                qa_report_path(character_id, project_root),
                 project_root,
             ),
         },

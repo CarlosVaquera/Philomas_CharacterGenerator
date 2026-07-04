@@ -6,17 +6,18 @@ from typing import Any
 from PIL import Image
 
 from .config import load_animations, load_character
-from .paths import exported_frames_dir, find_project_root, placeholder_spritesheet_path
+from .paths import clean_spritesheet_path, exported_frames_dir, find_project_root
 from .sprite_sheet import crop_frame, validate_sheet_size
 
 
 def build_animation_frame_manifest(
-    animations: dict[str, int],
+    animations: dict[str, dict[str, Any]],
     output_root: Path,
 ) -> dict[str, dict[str, Any]]:
     manifest: dict[str, dict[str, Any]] = {}
     global_frame = 0
-    for animation_name, frame_count in animations.items():
+    for animation_name, animation_spec in animations.items():
+        frame_count = int(animation_spec["frames"])
         paths = [
             output_root / animation_name / f"{animation_name}_{frame_index:03d}.png"
             for frame_index in range(frame_count)
@@ -24,6 +25,8 @@ def build_animation_frame_manifest(
         manifest[animation_name] = {
             "start_frame": global_frame,
             "frame_count": frame_count,
+            "loop": bool(animation_spec["loop"]),
+            "frame_duration_ms": int(animation_spec["frame_duration_ms"]),
             "paths": paths,
         }
         global_frame += frame_count
@@ -42,13 +45,13 @@ def export_animation_frames(
     frame_width, frame_height = character["frame_size"]
     columns, rows = character["sheet_layout"]
     capacity = int(columns) * int(rows)
-    requested_frames = sum(int(count) for count in animations.values())
+    requested_frames = sum(int(spec["frames"]) for spec in animations.values())
     if requested_frames > capacity:
         raise ValueError(
             f"Animation frame count {requested_frames} exceeds sheet capacity {capacity}"
         )
 
-    source_path = image_path or placeholder_spritesheet_path(character_id, project_root)
+    source_path = image_path or clean_spritesheet_path(character_id, project_root)
     output_root = exported_frames_dir(character_id, project_root)
     manifest = build_animation_frame_manifest(animations, output_root)
 

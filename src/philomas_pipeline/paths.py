@@ -51,12 +51,24 @@ def clean_asset_dir(character_id: str, root: Path | None = None) -> Path:
     return (root or find_project_root()) / "assets" / "clean" / character_id
 
 
+def clean_spritesheet_path(character_id: str, root: Path | None = None) -> Path:
+    return clean_asset_dir(character_id, root) / f"{character_id}_clean_spritesheet.png"
+
+
 def export_asset_dir(character_id: str, root: Path | None = None) -> Path:
     return (root or find_project_root()) / "assets" / "export" / character_id
 
 
 def exported_frames_dir(character_id: str, root: Path | None = None) -> Path:
     return export_asset_dir(character_id, root) / "frames"
+
+
+def animation_manifest_path(character_id: str, root: Path | None = None) -> Path:
+    return export_asset_dir(character_id, root) / "animation_manifest.json"
+
+
+def qa_report_path(character_id: str, root: Path | None = None) -> Path:
+    return export_asset_dir(character_id, root) / "qa_report.json"
 
 
 def placeholder_spritesheet_path(character_id: str, root: Path | None = None) -> Path:

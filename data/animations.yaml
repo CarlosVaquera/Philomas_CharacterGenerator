@@ -1,13 +1,48 @@
-idle: 6
-run: 12
-jump_up: 3
-fall: 3
-land: 3
-shoot_stand: 6
-shoot_run: 12
-shoot_jump: 4
-charge: 8
-charged_shot: 6
-hurt: 4
-death: 8
-
+idle:
+  frames: 6
+  loop: true
+  frame_duration_ms: 120
+run:
+  frames: 12
+  loop: true
+  frame_duration_ms: 80
+jump_up:
+  frames: 3
+  loop: false
+  frame_duration_ms: 100
+fall:
+  frames: 3
+  loop: true
+  frame_duration_ms: 100
+land:
+  frames: 3
+  loop: false
+  frame_duration_ms: 90
+shoot_stand:
+  frames: 6
+  loop: false
+  frame_duration_ms: 90
+shoot_run:
+  frames: 12
+  loop: true
+  frame_duration_ms: 80
+shoot_jump:
+  frames: 4
+  loop: false
+  frame_duration_ms: 90
+charge:
+  frames: 8
+  loop: true
+  frame_duration_ms: 80
+charged_shot:
+  frames: 6
+  loop: false
+  frame_duration_ms: 80
+hurt:
+  frames: 4
+  loop: false
+  frame_duration_ms: 120
+death:
+  frames: 8
+  loop: false
+  frame_duration_ms: 140

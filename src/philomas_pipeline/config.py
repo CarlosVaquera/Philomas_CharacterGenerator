@@ -26,7 +26,27 @@ def load_project_style(root: Path | None = None) -> dict[str, Any]:
     return load_yaml(project_style_path(root))
 
 
-def load_animations(root: Path | None = None) -> dict[str, int]:
-    data = load_yaml(animations_path(root))
-    return {str(name): int(count) for name, count in data.items()}
+def normalize_animation(name: str, value: Any) -> dict[str, Any]:
+    if isinstance(value, int):
+        return {
+            "frames": value,
+            "loop": True,
+            "frame_duration_ms": 100,
+        }
+    if not isinstance(value, dict):
+        raise ValueError(f"Animation '{name}' must be an integer or mapping")
 
+    frames = int(value.get("frames", 0))
+    if frames <= 0:
+        raise ValueError(f"Animation '{name}' must define a positive frame count")
+
+    return {
+        "frames": frames,
+        "loop": bool(value.get("loop", True)),
+        "frame_duration_ms": int(value.get("frame_duration_ms", 100)),
+    }
+
+
+def load_animations(root: Path | None = None) -> dict[str, dict[str, Any]]:
+    data = load_yaml(animations_path(root))
+    return {str(name): normalize_animation(str(name), value) for name, value in data.items()}

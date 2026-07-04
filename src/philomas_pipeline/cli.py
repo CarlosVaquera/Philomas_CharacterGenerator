@@ -3,11 +3,14 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .animation_manifest import export_animation_manifest
 from .character_scaffold import create_character
+from .cleaner import clean_spritesheet
 from .frame_exporter import export_animation_frames
 from .metadata import export_metadata
 from .placeholder_generator import generate_placeholder_spritesheet
 from .prompt_builder import render_templates_for_character
+from .qa_report import export_qa_report
 from .validator import validate_character
 
 
@@ -21,9 +24,12 @@ def build_parser() -> argparse.ArgumentParser:
     character_commands = (
         "build-prompts",
         "generate-placeholder",
+        "clean-spritesheet",
         "validate",
         "export-frames",
+        "export-animation-manifest",
         "export-metadata",
+        "qa-report",
         "run",
     )
     for command in character_commands:
@@ -89,6 +95,12 @@ def command_generate_placeholder(character_id: str, root: Path | None = None) ->
     return 0
 
 
+def command_clean_spritesheet(character_id: str, root: Path | None = None) -> int:
+    path = clean_spritesheet(character_id, root)
+    print(f"cleaned spritesheet: {path}")
+    return 0
+
+
 def command_validate(character_id: str, root: Path | None = None) -> int:
     report = validate_character(character_id, root)
     for warning in report.warnings:
@@ -120,16 +132,31 @@ def command_export_frames(character_id: str, root: Path | None = None) -> int:
     return 0
 
 
+def command_export_animation_manifest(character_id: str, root: Path | None = None) -> int:
+    path = export_animation_manifest(character_id, root)
+    print(f"exported animation manifest: {path}")
+    return 0
+
+
+def command_qa_report(character_id: str, root: Path | None = None) -> int:
+    path = export_qa_report(character_id, root)
+    print(f"exported QA report: {path}")
+    return 0
+
+
 def command_run(character_id: str, root: Path | None = None) -> int:
     command_build_prompts(character_id, root)
     command_generate_placeholder(character_id, root)
+    command_clean_spritesheet(character_id, root)
     status = command_validate(character_id, root)
     if status != 0:
         return status
     status = command_export_frames(character_id, root)
     if status != 0:
         return status
+    command_export_animation_manifest(character_id, root)
     command_export_metadata(character_id, root)
+    command_qa_report(character_id, root)
     print(f"pipeline complete: {character_id}")
     return 0
 
@@ -144,9 +171,12 @@ def main(argv: list[str] | None = None) -> int:
     handlers = {
         "build-prompts": command_build_prompts,
         "generate-placeholder": command_generate_placeholder,
+        "clean-spritesheet": command_clean_spritesheet,
         "validate": command_validate,
         "export-frames": command_export_frames,
+        "export-animation-manifest": command_export_animation_manifest,
         "export-metadata": command_export_metadata,
+        "qa-report": command_qa_report,
         "run": command_run,
     }
     return handlers[args.command](args.character_id, args.root)

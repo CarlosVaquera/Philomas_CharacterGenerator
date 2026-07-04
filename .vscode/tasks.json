@@ -124,7 +124,25 @@
       "problemMatcher": []
     },
     {
-      "label": "Philomas: Step C - Validate",
+      "label": "Philomas: Step C - Clean Spritesheet",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "clean-spritesheet",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step D - Validate",
       "type": "shell",
       "command": "${command:python.interpreterPath}",
       "args": [
@@ -142,7 +160,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Philomas: Step D - Export Frames",
+      "label": "Philomas: Step E - Export Frames",
       "type": "shell",
       "command": "${command:python.interpreterPath}",
       "args": [
@@ -160,13 +178,49 @@
       "problemMatcher": []
     },
     {
-      "label": "Philomas: Step E - Export Metadata",
+      "label": "Philomas: Step F - Export Animation Manifest",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "export-animation-manifest",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step G - Export Metadata",
       "type": "shell",
       "command": "${command:python.interpreterPath}",
       "args": [
         "-m",
         "philomas_pipeline.cli",
         "export-metadata",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step H - QA Report",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "qa-report",
         "${input:characterId}"
       ],
       "options": {
