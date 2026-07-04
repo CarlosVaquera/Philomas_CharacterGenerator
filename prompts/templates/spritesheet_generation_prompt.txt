@@ -1,0 +1,20 @@
+Generate a full transparent-background spritesheet for {{character.name}}.
+
+Character role: {{character.role}}
+Theme: {{character.theme}}
+Pixel style: {{project.pixel_style}}
+Frame size: {{frame_width}} x {{frame_height}}
+Sheet layout: {{sheet_columns}} columns x {{sheet_rows}} rows
+
+Animations and frame counts:
+{{animations}}
+
+Keep every pose readable at game scale. Preserve the character silhouette,
+palette, equipment, and supernatural visual language across all frames.
+
+Restrictions:
+{{project.restrictions}}
+
+Output rules:
+{{project.output_rules}}
+

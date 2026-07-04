@@ -1,0 +1,183 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Philomas: 00 First Time Setup + Run",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Philomas: 01 Install Dependencies",
+        "Philomas: 02 Run Pipeline"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: 01 Install Dependencies",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-e",
+        ".[dev]"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: 02 Run Pipeline",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "run",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: 03 Run Tests",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "pytest"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: 04 Create Character",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "create-character",
+        "${input:newCharacterId}",
+        "--name",
+        "${input:newCharacterName}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step A - Build Prompts",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "build-prompts",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step B - Generate Placeholder",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "generate-placeholder",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step C - Validate",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "validate",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step D - Export Metadata",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "export-metadata",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "characterId",
+      "type": "promptString",
+      "description": "Character id to run, for example: pepe",
+      "default": "pepe"
+    },
+    {
+      "id": "newCharacterId",
+      "type": "promptString",
+      "description": "New character id, lowercase with hyphens or underscores",
+      "default": "new_character"
+    },
+    {
+      "id": "newCharacterName",
+      "type": "promptString",
+      "description": "New character display name",
+      "default": "New Character"
+    }
+  ]
+}

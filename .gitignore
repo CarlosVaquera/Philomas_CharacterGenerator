@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.pytest_workspace/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+
+# Generated pipeline outputs stay reproducible.
+prompts/generated/*/*.txt
+assets/raw/*/*.png
+assets/clean/*/*.png
+assets/export/*/*.json
+
+!.gitkeep

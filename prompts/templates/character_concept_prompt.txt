@@ -1,0 +1,31 @@
+Create a character concept sheet for {{character.name}}.
+
+Role: {{character.role}}
+Theme: {{character.theme}}
+Project style: {{project.pixel_style}}
+Mood: {{project.mood}}
+
+Personality:
+{{character.personality}}
+
+Physical appearance:
+{{character.physical_appearance}}
+
+Clothing:
+{{character.clothing}}
+
+Equipment:
+{{character.equipment}}
+
+Supernatural theme:
+{{character.supernatural_theme}}
+
+Palette:
+{{character.palette}}
+
+Restrictions:
+{{project.restrictions}}
+
+Output rules:
+{{project.output_rules}}
+

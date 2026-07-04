@@ -1,0 +1,38 @@
+name: Pepe
+role: Lead Vocalist / Guitarist
+theme: Arcade Rock Horror
+personality:
+  - charismatic stage leader
+  - reckless but loyal
+  - dramatic showman energy
+  - defiant under supernatural pressure
+physical_appearance:
+  build: lean and agile
+  hair: messy black pompadour
+  face: sharp eyebrows, confident grin
+  silhouette: readable guitar-carrying rock singer profile
+clothing:
+  jacket: cropped red leather jacket with black trim
+  shirt: dark band tee
+  pants: slim black jeans
+  shoes: chunky stage boots
+equipment:
+  guitar: electric guitar with arcade neon edges
+  mic: handheld microphone with spectral cable
+supernatural_theme:
+  - ghostly amplifier sparks
+  - crimson sound wave aura
+  - haunted stage-light glow
+palette:
+  primary:
+    - "#D72638"
+    - "#101820"
+    - "#F2E8CF"
+  accents:
+    - "#15E6CD"
+    - "#F7C531"
+    - "#7A1CAC"
+frame_size: [112, 192]
+sheet_layout: [12, 12]
+hitbox: [30, 24, 52, 168]
+

@@ -1,0 +1,15 @@
+base_resolution: [1280, 720]
+pixel_style: crisp chunky pixel art
+mood: arcade rock horror, urban Monterrey night, supernatural energy
+restrictions:
+  - no photorealism
+  - no blur
+  - no painterly rendering
+  - no anime
+  - no anti-aliasing
+output_rules:
+  - transparent background
+  - consistent silhouette
+  - consistent palette
+  - readable animation poses
+

@@ -1,0 +1,16 @@
+Clean and normalize the spritesheet for {{character.name}}.
+
+Target frame size: {{frame_width}} x {{frame_height}}
+Target layout: {{sheet_columns}} columns x {{sheet_rows}} rows
+Style: {{project.pixel_style}}
+
+Checklist:
+- Maintain transparent background.
+- Keep silhouette, palette, and equipment consistent.
+- Remove visual noise, blur, stray pixels, and off-grid artifacts.
+- Preserve readable animation poses for:
+{{animations}}
+
+Restrictions:
+{{project.restrictions}}
+

@@ -1,0 +1,13 @@
+idle: 6
+run: 12
+jump_up: 3
+fall: 3
+land: 3
+shoot_stand: 6
+shoot_run: 12
+shoot_jump: 4
+charge: 8
+charged_shot: 6
+hurt: 4
+death: 8
+
