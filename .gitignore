@@ -14,5 +14,6 @@ prompts/generated/*/*.txt
 assets/raw/*/*.png
 assets/clean/*/*.png
 assets/export/*/*.json
+assets/export/*/frames/
 
 !.gitkeep

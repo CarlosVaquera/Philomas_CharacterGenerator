@@ -5,9 +5,11 @@ from pathlib import Path
 
 from . import __version__
 from .config import load_animations, load_character
+from .frame_exporter import build_animation_frame_manifest
 from .paths import (
     character_path,
     export_asset_dir,
+    exported_frames_dir,
     find_project_root,
     generated_prompt_dir,
     placeholder_spritesheet_path,
@@ -31,6 +33,21 @@ def export_metadata(character_id: str, root: Path | None = None) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     prompt_paths = sorted(path for path in prompt_dir.glob("*.txt") if path.is_file())
+    frame_manifest = build_animation_frame_manifest(
+        animations,
+        exported_frames_dir(character_id, project_root),
+    )
+    metadata_frame_exports = {
+        animation_name: {
+            "start_frame": animation_data["start_frame"],
+            "frame_count": animation_data["frame_count"],
+            "paths": [
+                project_relative(path, project_root)
+                for path in animation_data["paths"]
+            ],
+        }
+        for animation_name, animation_data in frame_manifest.items()
+    }
     metadata = {
         "version": __version__,
         "character": {
@@ -52,6 +69,7 @@ def export_metadata(character_id: str, root: Path | None = None) -> Path:
             ),
         },
         "generated_prompt_paths": [project_relative(path, project_root) for path in prompt_paths],
+        "frame_exports": metadata_frame_exports,
     }
 
     output_path = output_dir / "metadata.json"

@@ -55,5 +55,9 @@ def export_asset_dir(character_id: str, root: Path | None = None) -> Path:
     return (root or find_project_root()) / "assets" / "export" / character_id
 
 
+def exported_frames_dir(character_id: str, root: Path | None = None) -> Path:
+    return export_asset_dir(character_id, root) / "frames"
+
+
 def placeholder_spritesheet_path(character_id: str, root: Path | None = None) -> Path:
     return raw_asset_dir(character_id, root) / f"{character_id}_placeholder_spritesheet.png"

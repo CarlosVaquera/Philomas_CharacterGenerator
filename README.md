@@ -30,6 +30,7 @@ philomas-pipeline create-character <character_id> --name "Character Name"
 philomas-pipeline build-prompts pepe
 philomas-pipeline generate-placeholder pepe
 philomas-pipeline validate pepe
+philomas-pipeline export-frames pepe
 philomas-pipeline export-metadata pepe
 philomas-pipeline run pepe
 ```
@@ -58,6 +59,7 @@ once, daily work usually starts at task `02`.
 3. Inspect generated outputs if needed:
    - `prompts/generated/<character_id>/`
    - `assets/raw/<character_id>/<character_id>_placeholder_spritesheet.png`
+   - `assets/export/<character_id>/frames/`
    - `assets/export/<character_id>/metadata.json`
 
 ### Manual Step-by-step Pipeline
@@ -67,7 +69,8 @@ Use these only when you want to inspect or debug each stage:
 1. `Philomas: Step A - Build Prompts`
 2. `Philomas: Step B - Generate Placeholder`
 3. `Philomas: Step C - Validate`
-4. `Philomas: Step D - Export Metadata`
+4. `Philomas: Step D - Export Frames`
+5. `Philomas: Step E - Export Metadata`
 
 The tasks use the Python interpreter selected in VS Code and set
 `PYTHONPATH` to `src` for local module execution.
@@ -77,7 +80,8 @@ The `run` command executes the full placeholder pipeline:
 1. Render prompt files into `prompts/generated/<character>/`.
 2. Generate a placeholder RGBA spritesheet in `assets/raw/<character>/`.
 3. Validate the spritesheet and character metadata.
-4. Export `metadata.json` into `assets/export/<character>/`.
+4. Export individual animation frames into `assets/export/<character>/frames/`.
+5. Export `metadata.json` into `assets/export/<character>/`.
 
 ## Project Layout
 

@@ -1,11 +1,15 @@
 import json
 
+from philomas_pipeline.frame_exporter import export_animation_frames
 from philomas_pipeline.metadata import export_metadata
+from philomas_pipeline.placeholder_generator import generate_placeholder_spritesheet
 from philomas_pipeline.prompt_builder import render_templates_for_character
 
 
 def test_export_metadata_includes_core_character_fields():
     render_templates_for_character("pepe")
+    generate_placeholder_spritesheet("pepe")
+    export_animation_frames("pepe")
     path = export_metadata("pepe")
 
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -19,3 +23,5 @@ def test_export_metadata_includes_core_character_fields():
     assert len(data["generated_prompt_paths"]) == 3
     assert data["source_paths"]["character"].replace("\\", "/") == "data/characters/pepe.yaml"
     assert all(not path.startswith("C:") for path in data["generated_prompt_paths"])
+    assert data["frame_exports"]["idle"]["frame_count"] == 6
+    assert data["frame_exports"]["run"]["start_frame"] == 6

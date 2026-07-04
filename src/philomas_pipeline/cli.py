@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from .character_scaffold import create_character
+from .frame_exporter import export_animation_frames
 from .metadata import export_metadata
 from .placeholder_generator import generate_placeholder_spritesheet
 from .prompt_builder import render_templates_for_character
@@ -21,6 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
         "build-prompts",
         "generate-placeholder",
         "validate",
+        "export-frames",
         "export-metadata",
         "run",
     )
@@ -105,10 +107,26 @@ def command_export_metadata(character_id: str, root: Path | None = None) -> int:
     return 0
 
 
+def command_export_frames(character_id: str, root: Path | None = None) -> int:
+    report = validate_character(character_id, root)
+    if report.errors:
+        for error in report.errors:
+            print(f"error: {error}")
+        return 1
+
+    manifest = export_animation_frames(character_id, root)
+    exported_count = sum(int(data["frame_count"]) for data in manifest.values())
+    print(f"exported animation frames: {exported_count}")
+    return 0
+
+
 def command_run(character_id: str, root: Path | None = None) -> int:
     command_build_prompts(character_id, root)
     command_generate_placeholder(character_id, root)
     status = command_validate(character_id, root)
+    if status != 0:
+        return status
+    status = command_export_frames(character_id, root)
     if status != 0:
         return status
     command_export_metadata(character_id, root)
@@ -127,6 +145,7 @@ def main(argv: list[str] | None = None) -> int:
         "build-prompts": command_build_prompts,
         "generate-placeholder": command_generate_placeholder,
         "validate": command_validate,
+        "export-frames": command_export_frames,
         "export-metadata": command_export_metadata,
         "run": command_run,
     }

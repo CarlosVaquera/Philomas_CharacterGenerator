@@ -142,7 +142,25 @@
       "problemMatcher": []
     },
     {
-      "label": "Philomas: Step D - Export Metadata",
+      "label": "Philomas: Step D - Export Frames",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "philomas_pipeline.cli",
+        "export-frames",
+        "${input:characterId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Philomas: Step E - Export Metadata",
       "type": "shell",
       "command": "${command:python.interpreterPath}",
       "args": [
